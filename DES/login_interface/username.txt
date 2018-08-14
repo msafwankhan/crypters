@@ -1,7 +1,5 @@
-/Nsafwan:khan
 /Nass:butt
 /Ngood:boy
-/Nbeat:meup
 /Nmake:mecare
 /Nzom:ato
 /Nbutter:chicken
@@ -15,5 +13,9 @@
 /Sbake:mnbv
 /Smter:zxcv
 /Sbooty:bad
+/Smkers:shit
+/Npython:motor
+/Nmakte:loop
 /Smonty:python
-/Smotor:boat
+/Stest:test1
+/Ngoole:buttcheek
