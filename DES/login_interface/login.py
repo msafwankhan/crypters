@@ -83,14 +83,18 @@ def authenticate(user_name, password):
 
 def user_delete():
     while True:
-        choice = int(input("What type of account would do you have?\n1.Super-user\n2Normal User\n3.<-Back\n\n^_^: "))
-        print("Please login to make changes:\n\n^_^: ")
+        choice = int(input("What type of account do you have?\n1.Super-user\n2.Normal User\n3.<-Back\n\n^_^: "))
+
 
         if choice == 3:
-
             break
 
-        if choice == 2:
+        elif choice > 3:
+            print("Invalid entry")
+
+
+        elif choice == 2:
+            print("Please login with your credentials.  ")
             user_name = '/N' + usrnm()
             password = getpass("Password")
             if authenticate(user_name, password):
@@ -105,12 +109,13 @@ def user_delete():
                     continue
                 else:
                     print("Please enter the correct option")
-                    
+
             else:
                 print("You can have the superuser delete the user account")
                 sleep(2)
 
         elif choice == 1:
+            print("Please login with your credentials.  ")
             user_name = '/S' + usrnm()
             password = getpass("Password")
             if authenticate(user_name, password):
@@ -118,20 +123,28 @@ def user_delete():
                 del_usr_type = int(input("Select the user type\n1.Normal\n2.Priviliged\n3.<-Back\n\n^_^: "))
                 if del_usr_type == 3:
                     break
-                del_usr_name = usr_typ[del_usr_type] + input("Enter the username of the account to be deleted")
-                conf = input("The user {0} will be deleted. Are you sure? (Y/N): \n\n^_^:".format(del_usr_name)).lower()
-                if conf == 'y':
-                    print("The user {0} has been deleted".format(user_dict.pop(del_usr_name)))
-                    sleep(2)
-                    return False
-                elif conf == 'n':
-                    print('\nAccount deletion cancelled\n')
-                    sleep(2)
-                    continue
+                del_usr_name = usr_typ[del_usr_type] + input("Enter the username of the account to be deleted \n\n^_^: ")
+
+                if del_usr_name in user_dict:
+                    while True:
+
+                        conf = input("The user {0} will be deleted. Are you sure? (Y/N): \n\n^_^:".format(del_usr_name[2:])).lower()
+                        if conf == 'y':
+                            print("The user {0} has been deleted".format(user_dict.pop(del_usr_name)))
+                            sleep(2)
+                            return False
+                        elif conf == 'n':
+                            print('\nAccount deletion cancelled\n')
+                            sleep(2)
+                            break
+                        else:
+                            print("Please enter the correct option")
+
                 else:
-                    print("Please enter the correct option")
+                    print("User '{0}' is not found in database".format(del_usr_name[2:]))
+
             else:
-                print("You don't seem to have enough privileges to make changes.\n")
+                    print("You don't seem to have enough privileges to make changes.\n")
 
 
 while True:

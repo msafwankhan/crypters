@@ -17,5 +17,5 @@
 /Npython:motor
 /Nmakte:loop
 /Smonty:python
-/Stest:test1
-/Ngoole:buttcheek
+/Slarry:page
+/Sgoogle:larrypage
