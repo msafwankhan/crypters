@@ -1,4 +1,3 @@
-/Nass:butt
 /Ngood:boy
 /Nmake:mecare
 /Nzom:ato
@@ -6,17 +5,11 @@
 /Nriddle:methis
 /Nwater:board
 /Nsorry:shit
-/Nmaster:chef
-/Nshit:eater
 /Smaster:race
-/Sshit:storm
 /Sbake:mnbv
 /Smter:zxcv
 /Sbooty:bad
-/Smkers:shit
-/Npython:motor
 /Nmakte:loop
 /Smonty:python
-/Slarry:page
-/Sgoogle:larrypage
-/Nking:khan
+/Nmagic:mike
+/Snaaz:yasmin

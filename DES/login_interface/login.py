@@ -43,7 +43,7 @@ def user_creator(user_type):
 
                 elif password == conf_pass and len(password) > 2:
                     user_dict[user_name] = password
-                    print("An account with the {0} username has been created".format(user_name.replace(user_type, "")))
+                    print("An account with the '{0}' username has been created".format(user_name.replace(user_type, "")))
                     sleep(2)
                     flag = False
                     user_dict[user_name] = password
@@ -98,10 +98,11 @@ def user_delete():
             user_name = '/N' + usrnm()
             password = getpass("Password")
             if authenticate(user_name, password):
-                conf = input("Are you sure you want to delete the account with username {0}?(Y/N)\n\n^_^ :".format(
+                conf = input("Are you sure you want to delete the account with username '{0}'?(Y/N)\n\n^_^ :".format(
                     user_name[2:])).lower()
                 if conf == 'y':
-                    print("The user '{0}' has been deleted".format(user_dict.pop(user_name)))
+                    user_dict.pop(user_name)
+                    print("The user '{0}' has been deleted".format(user_name[2:]))
                     sleep(2)
                     return False
                 elif conf == 'n':
@@ -118,33 +119,35 @@ def user_delete():
         elif choice == 1:
             print("Please login with your credentials.  ")
             user_name = '/S' + usrnm()
-            password = getpass("Password")
+            password = getpass("Password:")
             if authenticate(user_name, password):
                 usr_typ = {1: '/N', 2: '/S', 3: None}
-                del_usr_type = int(input("Select the user type\n1.Normal\n2.Priviliged\n3.<-Back\n\n^_^: "))
-                if del_usr_type == 3:
-                    break
-                del_usr_name = usr_typ[del_usr_type] + input(
-                    "Enter the username of the account to be deleted \n\n^_^: ")
+                while True:
+                    del_usr_type = int(input("Select the user type of the account you would like to delete\n1.Normal\n2.Priviliged\n3.<-Back\n\n^_^: "))
+                    if del_usr_type == 3:
+                        break
+                    del_usr_name = usr_typ[del_usr_type] + input(
+                        "Enter the username of the account to be deleted \n\n^_^: ")
 
-                if del_usr_name in user_dict:
-                    while True:
+                    if del_usr_name in user_dict:
+                        while True:
 
-                        conf = input("The user '{0}' will be deleted. Are you sure? (Y/N): \n\n^_^:".format(
-                            del_usr_name[2:])).lower()
-                        if conf == 'y':
-                            print("The user {0} has been deleted".format(user_dict.pop(del_usr_name)))
-                            sleep(2)
-                            return False
-                        elif conf == 'n':
-                            print('\nAccount deletion cancelled\n')
-                            sleep(2)
-                            break
-                        else:
-                            print("Please enter the correct option")
+                            conf = input("The user '{0}' will be deleted. Are you sure? (Y/N): \n\n^_^:".format(
+                                del_usr_name[2:])).lower()
+                            if conf == 'y':
+                                user_dict.pop(del_usr_name)
+                                print("The user '{0}' has been deleted".format(del_usr_name[2:]))
+                                sleep(2)
+                                break
+                            elif conf == 'n':
+                                print('\nAccount deletion cancelled\n')
+                                sleep(2)
+                                break
+                            else:
+                                print("Please enter the correct option")
 
-                else:
-                    print("User '{0}' is not found in database".format(del_usr_name[2:]))
+                    else:
+                        print("User '{0}' is not found in database".format(del_usr_name[2:]))
 
             else:
                 print("You don't seem to have enough privileges to make changes.\n")
@@ -153,7 +156,7 @@ def user_delete():
 def actions():
     print("*" * 5 + 'Action Center' + '*' * 5)
     while True:
-        option = input("To display all the user-names and passwords enter Y: ").lower()
+        option = input("Hello {0}! To display all the user-names and passwords enter Y: ".format(user_name[2:].capitalize())).lower()
         if option == 'y':
             for k,v in user_dict.items():
                 print(k[2:],v)
@@ -196,7 +199,7 @@ while True:
 
             elif option == 2:
                 prot_1 = input(
-                    "You need to be a super-user to create an account priviliged accounts. Would you like to login as superuser(Y/N)\n\n^_^")
+                    "You need to be a super-user to create an account priviliged accounts. Would you like to login as superuser(Y/N)\n\n^_^: ")
                 if prot_1.lower() == 'y':
                     user_name = '/S' + usrnm()
                     password = getpass("Password")
@@ -205,8 +208,10 @@ while True:
 
         elif choice == 2:
             while True:
-                user_type = int(input("Enter the account type:\n\t1.Super-user\n\t2.Normal User\n\n^_^: "))
-                if user_type == 1:
+                user_type = int(input("Enter the account type:\n\t1.Super-user\n\t2.Normal User\n\t3.<-Back\n\n^_^: "))
+                if user_type == 3:
+                    break
+                elif user_type == 1:
                     usr_typ = '/S'
                 elif user_type == 2:
                     usr_typ = '/N'
@@ -217,18 +222,18 @@ while True:
                 user_name = usr_typ + usrnm()
                 password = getpass("Password")
                 if authenticate(user_name, password):
+                    system('cls')
                     if usr_typ == '/S':
                         actions()
+                        getch()
                         break
                     else:
-                        print("This is your feed. Add tools here!")
+                        print("Hello {0}! This is your feed. Add tools here!".format(user_name[2:].capitalize()))
                         getch()
                         break
 
         elif choice == 3:
             user_delete()
-
-
 
     except ValueError as v:
         stderr.write("Error encountered: " + str(v) + '\n')
