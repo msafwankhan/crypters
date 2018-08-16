@@ -10,7 +10,6 @@ for _ in range(shift_value):
     numbers.append(buffer)
 
 
-
 def caesarcipher(essay):
     new_essay = []
     for word in essay:
