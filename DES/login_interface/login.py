@@ -9,6 +9,8 @@ flag = True
 
 u = open("username.txt", 'r')
 z = (''.join((u.readlines())).split('\n'))
+z.sort()
+
 
 for i in z:
     if i != '':
