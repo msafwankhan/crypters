@@ -3,6 +3,7 @@ from os import system
 from time import sleep
 from sys import stderr, exit
 from msvcrt import getch
+from tabulate import tabulate
 
 user_dict = {}
 flag = True
@@ -134,7 +135,7 @@ def user_delete():
                     if del_usr_name in user_dict:
                         while True:
 
-                            conf = input("The user '{0}' will be deleted. Are you sure? (Y/N): \n\n^_^:".format(
+                            conf = input("The user '{0}' will be deleted. Are you sure? (Y/N): \n\n^_^: ".format(
                                 del_usr_name[2:])).lower()
                             if conf == 'y':
                                 user_dict.pop(del_usr_name)
@@ -157,11 +158,14 @@ def user_delete():
 
 def actions():
     print("*" * 5 + 'Action Center' + '*' * 5)
+    print("Hello {0}!".format(user_name[2:].capitalize()))
     while True:
-        option = input("Hello {0}! To display all the user-names and passwords enter Y: ".format(user_name[2:].capitalize())).lower()
+        option = input("To display all the user-names and passwords enter Y: ").lower()
+        l = []
         if option == 'y':
             for k,v in user_dict.items():
-                print(k[2:],v)
+              l.append((k[2:],v))
+            print(tabulate(l,headers=['Name','Password'],tablefmt='orgtbl'))
             break
         elif option == 'n':
             print('Very well!')
@@ -171,13 +175,14 @@ def actions():
             print("What was that? ")
 
 
+
 while True:
     try:
         system('cls')
 
         choice = int(
             input(
-                "Please enter the appropriate choice:\n\t1.Create a new user account\n\t2.Login\n\t3.Delete a user account\n\t4.Exit\n\n^_^:"))
+                "Please enter the appropriate choice:\n\t1.Create a new user account\n\t2.Login\n\t3.Delete a user account\n\t4.Exit\n\n^_^: "))
 
         if choice == 4:
             print("Exiting...")
@@ -222,7 +227,7 @@ while True:
                     system('cls')
 
                 user_name = usr_typ + usrnm()
-                password = getpass("Password")
+                password = getpass("Password:")
                 if authenticate(user_name, password):
                     system('cls')
                     if usr_typ == '/S':
@@ -241,11 +246,9 @@ while True:
         stderr.write("Error encountered: " + str(v) + '\n')
         sleep(2)
 
-
     except TypeError as t:
         stderr.write("Error encountered: " + str(t) + '\n')
         sleep(2)
-
 
     except KeyboardInterrupt:
         question = input("Keyboard Intrerrupt detected... Do you wish to exit?(Y/N): ")
